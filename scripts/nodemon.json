@@ -1,0 +1,5 @@
+{
+  "ignore": ["./dist"],
+  "watch": ["./src/*"],
+  "exclude": ["./src/*.txt"]
+}
