@@ -7,6 +7,7 @@ import { confirmTx, createTx, getPendingTx } from './transaction'
 const fs = require('fs').promises
 import { MetaTransactionData } from '@safe-global/safe-core-sdk-types'
 import { ERC20Contract } from './contract'
+import { addModuleTx, getModules } from './modules'
 
 const USDC = '0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8'
 async function main() {
@@ -66,27 +67,37 @@ async function main() {
 
   console.log('pendingTx', pendingTx)
 
-  const contract = new ERC20Contract(USDC, owner1Signer)
-  const data = await contract.returnData('10', await owner2Signer.getAddress())
+  // const contract = new ERC20Contract(USDC, owner1Signer)
+  // const data = await contract.returnData('10', await owner2Signer.getAddress())
 
-  safeTransactionData = {
-    to: USDC,
-    data,
-    value: '0',
-  }
+  // safeTransactionData = {
+  //   to: USDC,
+  //   data,
+  //   value: '0',
+  // }
 
-  await createTx(
-    safeAddress,
-    owner1Signer,
-    safeTransactionData,
-    apiKit,
-    ethAdapterOwner1
-  )
+  // await createTx(
+  //   safeAddress,
+  //   owner1Signer,
+  //   safeTransactionData,
+  //   apiKit,
+  //   ethAdapterOwner1
+  // )
+
+  // await addModuleTx(
+  //   safeAddress,
+  //   ethAdapterOwner1,
+  //   owner1Signer,
+  //   '0xe98cEf1748d2874F09dfFbeC69Dd571A0c02C050',
+  //   apiKit
+  // )
 
   pendingTx = (await getPendingTx(safeAddress, apiKit))[0]
   console.log('pendingTx', pendingTx)
 
-  await confirmTx(apiKit, pendingTx.safeTxHash, ethAdapterOwner2, safeAddress)
+  // await confirmTx(apiKit, pendingTx.safeTxHash, ethAdapterOwner2, safeAddress)
+
+  console.log(await getModules(safeAddress, ethAdapterOwner1))
 
   pendingTx = (await getPendingTx(safeAddress, apiKit))[0]
   console.log('pendingTx', pendingTx)
