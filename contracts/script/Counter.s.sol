@@ -9,9 +9,13 @@ contract CounterScript is Script {
     function setUp() public {}
 
     function run() public {
-        address proxy = Upgrades.deployUUPSProxy(
-    "RebalancerModule.sol",
-    abi.encodeCall(RebalancerModule.initialize, ("arguments for the initialize function"))
-);
+    RebalancerModule proxy = RebalancerModule(Upgrades.deployUUPSProxy(
+        "RebalancerModule.sol",
+        abi.encodeCall(RebalancerModule.initialize, (address(1))))
+    );
+
+    address owner = proxy.owner();
+    console2.logAddress(owner);
+    console2.logAddress(address(proxy));
     }
 }
